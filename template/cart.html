@@ -1,0 +1,195 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Cart</title>
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+<body>
+
+  <section id="header-top">
+    <div class="container-fluid title-top">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-5 text-center pt-3">
+          <p class="lead">Welcome to Techbuy</p>
+        </div>
+        <div class="col-6 d-flex flex-md-row flex-column justify-content-center align-items-md-center align-items-sm-start">
+          <div class="store-locator me-4">
+            <i class="bi bi-geo-alt content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark pe-1 ">Store Locations</a>
+          </div>
+          <div class="track-orders me-4">
+            <i class="bi bi-truck content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark pe-1">Track your order</a>
+          </div>
+          <div class="my-acc me-5">
+            <i class="bi bi-person content-size"></i>
+            <a href="{% url 'account' %}" class="d-inline text-decoration-none text-dark pe-1">My Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="header">
+    <div class="container-fluid title-section">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-5">
+          <img class="img-fluid pe-0 mb-0 logo" src="{% static 'Images/logo.png' %}">
+        </div>
+        <div class="col-6 d-flex flex-md-row flex-column justify-content-center align-items-md-center ms-md-">
+          <div class="home-title me-5">
+            <i class="bi bi-house-door-fill content-size "></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">HOME</a>
+          </div>
+          <div class="about-us-title me-5">
+            <i class="bi bi-person-square content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">ABOUT US</a>
+          </div>
+          <div class="contact-us me-5">
+            <i class="bi bi-linkedin content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">CONTACT US</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="header-bottom">
+    <div class="container-fluid hf mb-3">
+      <div class="row justify-content-md-end">
+        <div class="col-8 col-md-4 col-lg-5 pt-2 hf-1 mt-1">
+          <div>
+            <input type="text" class="search-bar" id="searchbox" aria-describedby="searchbox" placeholder="Search your products">
+            <button class="lens"><i class="bi bi-search search-icon"></i></button>
+          </div>
+        </div>
+        <div class="col-1 pt-3 col-md-1 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="{% url 'login' %}" class="d-none d-md-inline-block text-decoration-none text-dark">LOGIN</p></a>
+          <i class="bi bi-person-circle ps-1 g-cursor"></i>
+        </div>
+        <div class="col-1 col-md-1 pt-3 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="#" class="d-none d-md-inline-block text-decoration-none text-dark">CART</a>
+          <i class="bi bi-cart4 ps-1 g-cursor"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kart-details">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        {% for i in cart_details reversed %}
+        <div class="row mb-4">
+          <div class="col-12 d-flex position-relative">
+            <p class="lead fs-4 ps-4">From Saved Address</p>
+<!--            <div class="address-button-div">-->
+<!--              <button class="position-absolute end-0 btn btn-lg address-button">Enter delivery pincode</button>-->
+<!--            </div>-->
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 pt-4 d-flex">
+            <div class="col-2">
+              <img class="img-fluid" src="{{i.product.images.first.product_image.url}}">
+              <div class="d-flex justify-content-center align-items-center">
+                  <form method="POST" class="d-flex align-items-center">
+                                                {% csrf_token %}
+                    <input type="hidden" name="product_data" value="{{ i.product.product_id }}">
+                    <input type="hidden" name="cart_id" value="{{ i.cart_id }}">
+                <button id="decrement{{ forloop.counter }}" type="submit" name="cart_min" class="btn rounded-circle" style="width: 25px; height: 25px; padding: 0; margin-right: 3px; background-color: rgb(169, 157, 157);" onclick="decrement({{ forloop.counter }})">-</button>
+                <input type="text" id="number{{ forloop.counter }}" name="cart_no" class="form-control text-center" style="width: 55px; height: 35px; padding: 0; line-height: 50px;" value="{{i.cart_quantity}}" readonly>
+                <button class="btn rounded-circle" type="submit" name="cart_add" style="width: 25px; height: 25px; padding: 0; margin-left: 3px; background-color: rgb(169, 157, 157);" onclick="increment({{ forloop.counter }})">+</button>
+                  </form>
+              </div>
+              <script>
+                function increment() {
+                  let number = document.getElementById('number');
+                  number.value = parseInt(number.value) + 1;
+                  document.getElementById('decrement').disabled = false;
+                }
+
+                function decrement() {
+                  let number = document.getElementById('number');
+                  if (parseInt(number.value) > 1) {
+                    number.value = parseInt(number.value) - 1;
+                  }
+                  if (parseInt(number.value) === 1) {
+                    document.getElementById('decrement').disabled = true;
+                  }
+                }
+
+                window.onload = function() {
+                  if (parseInt(document.getElementById('number').value) === 1) {
+                    document.getElementById('decrement').disabled = true;
+                  }
+                }
+              </script>
+            </div>
+            <div class="col-7 ps-6">
+              <p class="text-primary brand-name mb-0">{{i.product.product_name}}</p>
+              <p class="text-secondary seller-name mb-3">Seller: {{i.product.seller}}</p>
+              <p class="class text-seconadary mb-5"><span class="text-decoration-line-through text-secondary og-price">₹69,900</span> <span class="fw-bold fs-5">₹{{i.product.product_price}}</span>
+              </p>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="me-4">
+                  <p class="choices"><a href="#" class="btn btn-warning text-decoration-none">SAVE FOR LATER</a></p>
+                </div>
+                <div>
+                  <p class="choices"><a href="/cartremove/{{i.cart_id}}" class="btn btn-warning text-decoration-none">REMOVE</a></p>
+                </div>
+                <!-- Place Order button within each cart item -->
+                <div>
+                  <button  type="submit" class="place-order-button position-relative end-0 me-2 choices">PLACE ORDER</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- Price Details Section -->
+      <div class="col-md-4 ps-md-4">
+        <div class="price-title text-secondary">
+          PRICE DETAILS
+        </div>
+        <div class="d-flex position-relative mt-3">
+          <p>Price ({{cart_count}}  item)</p>
+          <div class="address-button-div">
+            <p class="position-absolute end-0">₹{{total_price|intcomma}}</p>
+          </div>
+        </div>
+        <div class="d-flex position-relative mt-3">
+          <p>Discount</p>
+          <div class="address-button-div">
+            <p class="position-absolute end-0 text-success">-₹{{total_discount|intcomma}}</p>
+          </div>
+        </div>
+        <div class="d-flex position-relative mt-4 price-decoration">
+          <p class="price-body fs-4">Total Amount</p>
+          <div class="address-button-div">
+            <p class="position-absolute end-0 fs-4 price-body">₹{{net_amount|intcomma}}</p>
+          </div>
+        </div>
+        <div class="mt-2">
+          <span class="text-success">You'll save ₹{{net_amount|intcomma}} on this order </span>
+        </div>
+      </div>
+      <!-- End of Price Details Section -->
+    </div>
+  </div>
+</section>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

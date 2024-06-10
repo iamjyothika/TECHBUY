@@ -1,0 +1,379 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Techbuy | Product Info</title>
+  <link rel="stylesheet" href="{% static 'css/productdetails.css' %}">
+</head>
+<body>
+
+  <section id="header">
+    <div class="container-fluid title-section">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-5">
+          <img class="img-fluid pe-0 mb-0 logo" src="{% static 'Images/logo.png' %}">
+        </div>
+        <div class="col-6 d-flex flex-md-row flex-column justify-content-center align-items-md-center">
+          <div class="home-title me-5">
+            <i class="bi bi-house-door-fill content-size "></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">HOME</a>
+          </div>
+          <div class="about-us-title me-5">
+            <i class="bi bi-person-square content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">ABOUT US</a>
+          </div>
+          <div class="contact-us me-5">
+            <i class="bi bi-linkedin content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark content-size">CONTACT US</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="header-bottom">
+    <div class="container-fluid hf">
+      <div class="row justify-content-md-end">
+        <div class="col-8 col-md-4 col-lg-5 pt-2 hf-1 mt-1">
+          <div>
+            <input type="text" class="search-bar" id="searchbox" aria-describedby="searchbox" placeholder="Search your products">
+            <button class="lens"><i class="bi bi-search search-icon"></i></button>
+          </div>
+        </div>
+        <div class="col-1 pt-3 col-md-1 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="#" class="d-none d-md-inline-block text-decoration-none text-dark">LOGIN</p></a>
+          <i class="bi bi-person-circle ps-1 g-cursor"></i>
+        </div>
+        <div class="col-1 col-md-1 pt-3 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="#" class="d-none d-md-inline-block text-decoration-none text-dark">CART</a>
+          <i class="bi bi-cart4 ps-1 g-cursor"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section>
+
+    <div class="container-fluid mt-2 mb-3">
+      <div class="row no-gutters">
+          <div class="col-md-5 pr-2">
+              <div class="card">
+                  {% for i in product_data %}
+                  <div class="carousel-container">
+                      <div id="carouselExampleIndicators" class="carousel slide">
+                          <div class="carousel-inner">
+                              {% for i in product_data %}
+                              {% for image in i.images.all %}
+                              <div class="carousel-item  {% if forloop.first %}active{% endif %}">
+                                  <img src="{{image.product_image.url}}" class="d-block w-100" alt="...">
+                              </div>
+                              {% endfor %}
+                              {% endfor %}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="thumbnail-container">
+                      {% for i in product_data %}
+                      {% for image in i.images.all %}
+                      <img src="{{image.product_image.url}}" class="thumbnail" data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}">
+                      {% endfor %}
+                      {% endfor %}
+                      {% endfor %}
+
+                  </div>
+
+              </div>
+
+
+
+
+
+
+
+
+              <div class="card mt-2">
+                  <h6>Reviews</h6>
+                  <div class="d-flex flex-row">
+                      <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                      <span class="ml-1 font-weight-bold">3.5</span>
+                  </div>
+                  <hr>
+                  <div class="badges">
+                    <span class="badge bg-dark ">All (230)</span>
+                    <span class="badge bg-dark "> <i class="bi bi-chat-left-dots-fill"></i> 23 </span>
+                    <span class="badge bg-warning">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <span class="ml-1">230</span>
+                    </span>
+                  </div>
+
+                  <hr>
+
+              </div>
+          </div>
+
+          <div class="col-md-7">
+
+            <div class="card">
+              <div class="d-flex flex-row align-items-center">
+                  <div class="p-ratings">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <i class="bi bi-star"></i>
+                    </div>
+                  <span class="ml-1"> 3.5</span>
+              </div>
+
+              <div class="about">
+                  {% for i in product_data %}
+                  <h3>{{i.product_name}}</h3>
+                  <h4 class="font-weight-bold">₹{{i.product_price}}</h4>
+              </div>
+
+              <div class="buttons">
+                  <form method="POST">
+                      {% csrf_token %}
+                <button type="submit" class="btn btn-warning btn-long" name="addtocart">Add to Cart</button>
+                <button type="submit" class="btn btn-success btn-long" name="buynow">Buy it Now</button>
+                <button type="submit" class="btn btn-light wishlist" name="wishlist"><i class="bi bi-bookmark-heart"></i></button>
+                  </form>
+              </div>
+
+              <hr>
+
+              <div class="product-description">
+                <div class="d-flex flex-row align-items-center">
+                  <i class="fa fa-calendar-check-o"></i>
+                  <span class="ml-1">Delivery from sweden, 15-45 days</span>
+                </div>
+
+                <div class="mt-2">
+
+                  <span class="font-weight-bold">Description:</span>
+
+                  <p>{{i.product_description}}</p>
+
+                  <div class="mt-2">
+                    <span class="font-weight-bold">PRODUCT SPECS</span>
+                  </div>
+
+                  <div class="bullets">
+                    {% for i in product_data %}
+                                {% if cat_id == 1 %}
+                                    {% for spec in i.phones.all %}
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Storage:{{spec.spec_ram}}RAM | {{spec.spec_storage}}ROM</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen size:{{spec.spec_display_size}} inches</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Camera:{{spec.spec_camera}}MP Front Camera</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Battery:{{spec.spec_battery}}mAh Lithium-ion Battery</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">OS:{{spec.spec_os}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Resolution:{{spec.spec_resolution}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Color:{{spec.color}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">{{spec.spec_processor}} Processor</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
+                                    {% endfor %}
+                                {% elif cat_id == 2 or cat_id == 3 %}
+                                    {% for spec in i.pc.all %}
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Storage:{{spec.spec_ram}} RAM | {{spec.spec_storage}} ROM</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen Size:{{spec.spec_display_size}} inches</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">GPU:{{spec.spec_gpu}} GPU</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">OS:{{spec.spec_os}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Resolution:{{spec.spec_resolution}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">{{spec.spec_processor}} Processor</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">{{spec.spec_refresh_rate}} Refresh rate</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
+                                    {% endfor %}
+                                {% elif cat_id == 4 %}
+                                    {% for spec in i.audio.all %}
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Product type:{{spec.product_type}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Bluetooth:{{spec.spec_bluetooth}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Playback:{{spec.spec_playback}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Mic:{{spec.spec_mic}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Latency:{{spec.spec_latency}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
+                                    {% endfor %}
+                                {% elif cat_id == 5 %}
+                                    {% for spec in i.tv.all %}
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Resolution:{{spec.spec_resolution}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen size:{{spec.spec_display_size}} inches</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">OS:{{spec.spec_os}}</span> </div>
+                                        <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
+                                    {% endfor %}
+                                {% endif %}
+                      {% endfor %}
+
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="font-weight-bold">SELLER</span>
+                </div>
+
+                <div class="d-flex flex-column ml-1 comment-profile">
+                  <span class="username">{{i.seller}}</span>
+                </div>
+
+              </div>
+              {% endfor %}
+
+            </div>
+
+          </div>
+
+          <div class="card mt-2">
+            <span>Similar items:</span>
+            <div class="similar-products mt-2 d-flex flex-row justify-content-between">
+                {% for product in similar_products %}
+              <div class="card border p-1" style="width: 9rem;margin-right: 3px;"> <img src="{{product.images.first.product_image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">₹{{product.product_price}}</h6>
+                </div>
+              </div>
+                {% endfor %}
+            </div>
+          </div>
+
+
+          <div class="container-fluid mt-2">
+            <div class="row">
+              <div class="col-12">
+                <div class="card mt-2">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                      <h4>Ratings & Review</h4>
+                    </div>
+                    <div class="rate-product">
+                      <button class="review-button" data-bs-toggle="modal" data-bs-target="#ReviewModal">Rate Product</button>
+
+                      <div class="modal fade" id="ReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form  method="POST" action="/addreview">
+                                  {% csrf_token %}
+                                <div class="form-group mb-3">
+                                  <label for="rating" class="fs-5">Rate this Product</label>
+                                  <div class="rating">
+                                    <i class="bi bi-star" data-rating="5"></i>
+                                    <i class="bi bi-star" data-rating="4"></i>
+                                    <i class="bi bi-star" data-rating="3"></i>
+                                    <i class="bi bi-star" data-rating="2"></i>
+                                    <i class="bi bi-star" data-rating="1"></i>
+                                  </div>
+                                  <input type="hidden" name="rating" id="rating" value="5">
+                                     {% for i in product_data %}
+                                    <input type="hidden" name="productid" value="{{i.product_id}}">
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="review" class="fs-5">Review this Product</label>
+                                  <input type="text" class="form-control mb-3" id="review" name="review" placeholder="Enter your review">
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+{% for i in review_data %}
+<div class="card">
+    <div class="d-flex mb-3">
+        <div class="user-name align-content-center">
+            <div class="profile-image me-2">
+                <img src="{{ i.user.user_profile.url }}" alt="Profile Image">
+            </div>
+            <span class="small text-secondary">{{ i.user.user_name }} </span>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-start">
+        <div class="user-rating d-flex align-items-center" id="userRating">
+            <div class="d-flex me-2">
+                {% for star in ratings %}
+                    {% if star <= i.user_rating %}
+                        <i class="bi bi-star-fill"></i>  {# Full star for each point of rating #}
+                    {% else %}
+                        <i class="bi bi-star"></i>  {# Empty star for remaining points #}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="flex-grow-1">
+            <div>
+                <span class="text-success small fw-bold">{{ i.user_review }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Activate the carousel
+    $('#carouselExampleIndicators').carousel();
+
+    // Handle thumbnail click to slide carousel
+    $('.thumbnail').on('click', function() {
+        var slideIndex = $(this).data('slide-to');
+        $('#carouselExampleIndicators').carousel(slideIndex);
+    });
+});
+
+  $(document).ready(function() {
+      // Handle star rating
+      $('.rating i').on('click', function() {
+        var rating = $(this).data('rating');
+        $('#rating').val(rating);
+        $(this).addClass('bi-star-fill').removeClass('bi-star').prevAll().addClass('bi-star-fill').removeClass('bi-star').end().nextAll().removeClass('bi-star-fill').addClass('bi-star');
+      });
+
+      // Handle form submission
+      $('#reviewForm').on('submit', function(e) {
+        e.preventDefault();
+        var review = $('#review').val();
+        var rating = $('#rating').val();
+        // Send the review and rating to the server for processing/storage
+        // Here you can make an AJAX call to send the data to the server
+        console.log("Review:", review);
+        console.log("Rating:", rating);
+        // For demo purposes, let's just close the modal
+        $('#ReviewModal').modal('hide');
+      });
+    });
+
+</script>
+
+</html>

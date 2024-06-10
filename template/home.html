@@ -1,0 +1,342 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+  <section id="header-top">
+    <div class="container-fluid title-top">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-5 text-center pt-3">
+          <p class="lead">Welcome to Techbuy</p>
+        </div>
+        <div class="col-6 d-flex flex-md-row flex-column justify-content-center align-items-md-center align-items-sm-start">
+          <div class="store-locator me-4">
+            <i class="bi bi-geo-alt content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark pe-1 ">Store Locations</a>
+          </div>
+          <div class="track-orders me-4">
+            <i class="bi bi-truck content-size"></i>
+            <a href="#" class="d-inline text-decoration-none text-dark pe-1">Track your order</a>
+          </div>
+          <div class="my-acc me-5">
+            <i class="bi bi-person content-size"></i>
+            <a href="{% url 'dash' %}" class="d-inline text-decoration-none text-dark pe-1">My Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="header">
+    <div class="container-fluid title-section">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-5">
+          <img class="img-fluid pe-0 mb-0 logo" src="static/Images/logo.png">
+        </div>
+        <div class="col-6 d-flex flex-md-row flex-column justify-content-center align-items-md-center">
+          <div class="home-title me-5">
+            <i class="bi bi-house-door-fill content-size "></i>
+            <a href="{% url 'home' %}" class="d-inline text-decoration-none text-dark content-size">HOME</a>
+          </div>
+          <div class="about-us-title me-5">
+            <i class="bi bi-person-square content-size"></i>
+            <a href="{% url 'about' %}" class="d-inline text-decoration-none text-dark content-size">ABOUT US</a>
+          </div>
+          <div class="contact-us me-5">
+            <i class="bi bi-linkedin content-size"></i>
+            <a href="{% url 'contact' %}" class="d-inline text-decoration-none text-dark content-size">CONTACT US</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="header-bottom">
+    <div class="container-fluid hf mb-3">
+      <div class="row justify-content-md-end">
+        <div class="col-8 col-md-4 col-lg-5 pt-2 hf-1 mt-1">
+          <div>
+               <form method="POST" action="{% url 'search' %}">
+                 {% csrf_token %}
+            <input type="text" class="search-bar" id="searchbox" aria-describedby="searchbox" name="search" placeholder="Search your products">
+            <button class="lens"><i class="bi bi-search search-icon"></i></button>
+               </form>
+          </div>
+        </div>
+        </f>
+        <div class="col-1 pt-3 col-md-1 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="{% url 'login' %}" class="d-none d-md-inline-block text-decoration-none text-dark">LOGIN</p></a>
+          <i class="bi bi-person-circle ps-1 g-cursor"></i>
+        </div>
+        <div class="col-1 col-md-1 pt-3 d-flex align-content-center justify-content-center hf-contents mt-1">
+          <a href="{% url 'cart' %}" class="d-none d-md-inline-block text-decoration-none text-dark">CART</a>
+          <i class="bi bi-cart4 ps-1 g-cursor"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="container-fluid mb-5">
+      <div class="row justify-content-evenly">
+        {% for i in categories %}
+        <div class="col-md-2">
+          <a href= "/category_name/{{i.category_id}}"> <img class="img-fluid mobile g-cursor" src="{{i.category_img.url}}"></a>
+          <a href= "/category_name/{{i.category_id}}" class="text-decoration-none text-dark fs-4 d-flex align-items-center justify-content-center">{{i.category_name}}</a>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+  <section id="ads_carousel">
+    <div class="container-fluid">
+      <div class="row position-relative">
+        <div class="col ps-4 pe-4 d-none d-lg-flex">
+          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="static/Images/banner-4.png " class="d-block w-100 c-pointer" alt="mi_banner5">
+              </div>
+              <div class="carousel-item">
+                <img src="static/Images/banner-3.png" class="d-block w-100 carousel-dimns c-pointer" alt="banner-3">
+              </div>
+              <div class="carousel-item">
+                <img src="static/Images/banner-5.png" class="d-block w-100 carousel-dimns c-pointer" alt="banner-2">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="best-tvs">
+    <div class="contaier-fluid mt-3 mb-3 ps-6">
+      <div class="row">
+        <div class="col ps-6 ">
+          <p class="fs-2"> Best selling smart TVs...</p>
+        </div>
+      </div>
+      <div class="row sm-ps-1 md-ps-6 d-flex align-items-center justify-content-md-around">
+       {% for i in tv_data %}
+
+        <div class="col-sm-5 col-md-2 d-flex align-items-center justify-content-center">
+          <div class="card" style="height:435p; display:relative;">
+            <img src="{{i.images.first.product_image.url}}" class="card-img-top img-fluid tv_1 d-block c-pointer" alt="...">
+            <div class="card-body">
+                <a href="/product/{{i.product_id}}" style="text-decoration: none;" class="card-text figCStyle">{{i.product_name}}</a>
+                <p class="card-text Lead fw-bold fs-5 mb-0">₹{{i.product_price}}</p>
+                <p class="card-text mb-0 deal-details">M.R.P: <span class="text-decoration-line-through ">₹20.990.00</span></p>
+                <p class="card-text deal-details">You Save: 36% (₹7,500)</p>
+                <div class="mb-1">
+                   {% for star in star_range %}
+        {% if star <= i.product_rating %}
+            <i class="bi bi-star-fill"></i>  {# Filled star #}
+        {% else %}
+            <i class="bi bi-star"></i>  {# Empty star #}
+        {% endif %}
+    {% endfor %}
+    <span class="text-primary fst-normal">({{i.product_rating}})</span>
+                </div>
+                <button class="btn btn-outline-success rounded-pill fw-bold highlight">OFFERS AVAILABLE</button>
+              </div>
+            </div>
+          </div>
+
+         {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="best-sphones">
+    <div class="contaier-fluid mt-3 mb-3">
+      <div class="row">
+        <div class="col ps-6">
+          <p class="fs-2"> Best selling Smartphones...</p>
+        </div>
+      </div>
+      <div class="row sm-ps-1 md-ps-6 d-flex align-items-center justify-content-md-around">
+       {% for i in mobile_data %}
+        <div class="col-sm-5 col-md-2 d-flex align-items-center justify-content-center">
+          <div class="card" style="height:435p; display:relative;">
+            <img src="{{i.images.first.product_image.url}}" class="card-img-top img-fluid tv_1 d-block c-pointer" alt="...">
+            <div class="card-body">
+              <a href="/product/{{i.product_id}}" style="text-decoration: none;" class="card-text figCStyle">{{i.product_name}}</a>
+                <p class="card-text Lead fw-bold fs-5 mb-0">₹{{i.product_price}}</p>
+                <p class="card-text mb-0 deal-details">M.R.P: <span class="text-decoration-line-through ">₹20.990.00</span></p>
+                <p class="card-text deal-details">You Save: 36% (₹7,500)</p>
+                <div class="mb-1">
+                  {% for star in star_range %}
+        {% if star <= i.product_rating %}
+            <i class="bi bi-star-fill"></i>  {# Filled star #}
+        {% else %}
+            <i class="bi bi-star"></i>  {# Empty star #}
+        {% endif %}
+    {% endfor %}
+    <span class="text-primary fst-normal">({{i.product_rating}})</span>
+                </div>
+
+                <button class="btn btn-outline-success rounded-pill fw-bold highlight">OFFERS AVAILABLE</button>
+              </div>
+            </div>
+          </div>
+         {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
+
+
+<!--    <div class="contaier-fluid mt-3 mb-3">-->
+<!--      <div class="row ps-6 d-flex align-items-center justify-content-md-start">-->
+<!--        {% for i in mobile_data %}-->
+<!--          <div class="col-sm-5 col-md-3 pb-1 d-flex align-items-center justify-content-center">-->
+<!--            <div class="card mb-3" style="height:575px; width:365px;">-->
+<!--              <div class="d-flex justify-content-center">-->
+<!--                <div style="height:300px; width:225px; object-fit:fill;">-->
+<!--                  <img class="card-img-top img-fluid d-block c-pointer mt-3" src="{{i.images.first.product_image.url}}" alt="Vivo V29 5G (Blue, 8GB, 128GB)">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="card-body description mt-3">-->
+<!--                  <p class="card-title figCStyle">{{i.product_name}}</p>-->
+<!--                  <p class="card-text Lead fw-bold fs-5 mb-0">₹{{i.product_price}}</p>-->
+<!--                  <p class="card-text mb-0 deal-details">M.R.P: <span class="text-decoration-line-through ">₹39,999</span></p>-->
+<!--                  <p class="card-text deal-details">You Save: 10% (₹3,300)</p>-->
+<!--                  <div class="mb-1">-->
+<!--                      <i class="bi bi-star-fill"></i>-->
+<!--                      <i class="bi bi-star-fill"></i>-->
+<!--                      <i class="bi bi-star-fill"></i>-->
+<!--                      <i class="bi bi-star-fill"></i>-->
+<!--                      <i class="bi bi-star"><span class="text-primary fst-normal">(512)</span></i>-->
+<!--                  </div>-->
+<!--                  <button class="btn btn-outline-success rounded-pill fw-bold highlight">OFFERS AVAILABLE</button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        {% endfor %}-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    </div>-->
+<!--  </section>-->
+  <section id="best-laps">
+    <div class="contaier-fluid mt-3 mb-3">
+      <div class="row">
+        <div class="col ps-6">
+          <p class="fs-2"> Best selling Laptops...</p>
+        </div>
+      </div>
+      <div class="row ps-6 d-flex align-items-center justify-content-md-around">
+        {% for i in lap_data %}
+        <div class="col-sm-5 col-md-2 d-flex align-items-center justify-content-center">
+          <div class="card mb-3">
+            <img src="{{i.images.first.product_image.url}}" class="card-img-top img-fluid tv_1 d-block c-pointer" alt="...">
+            <div class="card-body">
+               <a href="/product/{{i.product_id}}" style="text-decoration: none;" class="card-text figCStyle">{{i.product_name}}</a>
+                <p class="card-text Lead fw-bold fs-5 mb-0">₹{{i.product_price}}</p>
+                <p class="card-text mb-0 deal-details">M.R.P: <span class="text-decoration-line-through ">₹29,990.00</span></p>
+                <p class="card-text deal-details">You Save: 17% (₹4,900)</p>
+                <div class="mb-1">
+                 {% for star in star_range %}
+        {% if star <= i.product_rating %}
+            <i class="bi bi-star-fill"></i>  {# Filled star #}
+        {% else %}
+            <i class="bi bi-star"></i>  {# Empty star #}
+        {% endif %}
+    {% endfor %}
+    <span class="text-primary fst-normal">({{i.product_rating}})</span>
+
+                </div>
+                <button class="btn btn-outline-success rounded-pill fw-bold highlight">OFFERS AVAILABLE</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <section class="footor">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-3">
+          <h5>Get to Know Us</h5>
+          <ul class="list-unstyled">
+            <li><a class="text-decoration-none" href="#">About Us</a></li>
+            <li><a class="text-decoration-none" href="#">Careers</a></li>
+            <li><a class="text-decoration-none" href="#">Press Releases</a></li>
+            <li><a class="text-decoration-none" href="#">Techbuy Science</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3">
+          <h5>Connect with Us</h5>
+          <ul class="list-unstyled">
+            <li><a class="text-decoration-none" href="#">Facebook</a></li>
+            <li><a class="text-decoration-none" href="#">Twitter</a></li>
+            <li><a class="text-decoration-none" href="#">Instagram</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3">
+          <h5>International Sites</h5>
+          <ul class="list-unstyled">
+            <li><a class="text-decoration-none" href="#">India</a></li>
+            <li><a class="text-decoration-none" href="#">China</a></li>
+            <li><a class="text-decoration-none" href="#">Sri Lanka</a></li>
+            <li><a class="text-decoration-none" href="#">France</a></li>
+            <li><a class="text-decoration-none" href="#">Dubai</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3">
+          <h5>Legal Information</h5>
+          <ul class="list-unstyled">
+            <li><a  class="text-decoration-none" href="#">Conditions of Use & Sale</a></li>
+            <li><a class="text-decoration-none" href="#">Privacy Notice</a></li>
+            <li><a class="text-decoration-none" href="#">Interest-Based Ads</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row footor-logo">
+        <div class="col d-flex justify-content-center align-items-center">
+          <img class="img-fluid footer-img" src="static/Images/logo.png">
+          <div class="text-white" fs-5>© 2023-2024, techbuy.com, Inc. or its affiliates</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- carousel(cat/banner),links,fix-final responsive issues,banner-button(stop responsive),signup modal,description of products(optional),back-to-top -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
