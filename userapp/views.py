@@ -1,10 +1,11 @@
 import time
 
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from sellerapp.models import *
 from adminapp.models import *
 from userapp.models import *
+from sellerapp.models import *
 from django.db.models import Q
 import random
 
@@ -42,7 +43,7 @@ def categories(request, catg_id):
 
 def product(request, proid):
     data = ProductModel.objects.filter(product_id=proid)
-    product_obj = ProductModel.objects.get(product_id=proid)
+    product_obj = get_object_or_404(ProductModel, product_id=proid)
     cat_id = ProductModel.objects.get(product_id=proid).category_id
     review = ReviewDataModel.objects.filter(product_id=proid)
     image = ProductImageModel.objects.filter(product_id=proid)
@@ -60,19 +61,19 @@ def product(request, proid):
             user1 = request.session["user"]
             if "addtocart" in request.POST:
                 cart_obj = CartDataModel()
-                cart_obj.user_id = user1
+                cart_obj.user_id = user
                 cart_obj.product = product_obj
                 cart_obj.save()
             elif "wishlist" in request.POST:
                 wish_obj = WishlistModel()
-                wish_obj.user_id = user1
+                wish_obj.user_id = user
                 wish_obj.product = product_obj
                 wish_obj.save()
         else:
             return redirect("/login")
 
     return render(request, "productdetails.html",
-                  {'product_data': data, 'cat_id': cat_id, 'review_data': review, 'image': image, "user": user,
+                  {'product_data': product_obj, 'cat_id': cat_id, 'review_data': review, 'image': image, "user": user,
                    "similar_products": similar_products, "ratings": ratings, "reviews": reviews})
 
 
@@ -88,7 +89,6 @@ def search(request):
 
 def aboutus(request):
     return render(request, "aboutus.html")
-
 
 def contact(request):
     user = None
@@ -114,18 +114,7 @@ def contact(request):
     return render(request, 'contactus.html', {'user': user, 'cart_no': cart_no})
 
 
-def login(request):
-    error = ''
-    if request.method == 'POST':
-        user_name = request.POST.get('username')
-        user_password = request.POST.get('password')
-        user = UserDataModel.objects.filter(user_name=user_name, user_password=user_password).first()
-        if user is not None:
-            request.session['user'] = user.user_id
-            return redirect('/')
-        else:
-            error = "invalid username and password"
-    return render(request, 'login.html', {"error": error})
+
 
 
 def register(request):
@@ -149,6 +138,19 @@ def register(request):
         register_obj.save()
         return redirect('/login')
     return render(request, "signup.html")
+
+def login(request):
+    error = ''
+    if request.method == 'POST':
+        user_name = request.POST.get('username')
+        user_password = request.POST.get('password')
+        user = UserDataModel.objects.filter(user_name=user_name, user_password=user_password).first()
+        if user is not None:
+            request.session['user'] = user.user_id
+            return redirect('/')
+        else:
+            error = "invalid username and password"
+    return render(request, 'login.html', {"error": error})
 
 
 def dash(request):
@@ -177,6 +179,7 @@ def mycart(request, product=None):
             if i.product.has_discount:
                 discount_amount_per_product = i.product.product_price - i.product.discount_price()
                 total_discount += i.cart_quantity * discount_amount_per_product
+                print(total_discount)
         net_amount = total_price - total_discount
         if request.method == "POST":
             cart_id = request.POST.get('cart_id')
@@ -341,3 +344,47 @@ def updateuser(request):
         return render(request,"myaccount.html",{"userdata":data})
 
     return redirect('/login')
+def purchase_product(request,product_id):
+    request.session['product_session']=product_id
+    if 'user' not in request.session:
+        return redirect('/login')
+    else:
+        user_id=request.session['user']
+        user=UserDataModel.objects.get(user_id=user_id)
+        product_obj=ProductModel.objects.get(product_id=product_id)
+        address_data=UserAddressDataModel.objects.filter(user=user)
+        address_data_check=UserAddressDataModel.objects.filter(user=user)
+        address_data_check = address_data.exists()
+        current_address=None
+        if address_data_check:
+            first_address=address_data.first()
+            request.session['address_id']=first_address.address_id
+            address_id=int(request.session['address_id'])
+            current_address=UserAddressDataModel.objects.get(address_id=address_id)
+        if request.method=="POST":
+            if 'del_add_change' in request.POST:
+                selected_address_id=request.POST.get('address_input')
+                request.session['address_id']=selected_address_id
+                address_id=int(request.session['address_id'])
+                current_address=UserAddressDataModel.objects.get(address_id=address_id)
+            if 'quantity' in request.POST:
+                quantity=int(request.POST.get('quantity'))
+                request.session['quantity']=quantity
+
+            total_price = product_obj.product_price * quantity
+            total_discount_price = product_obj.discount_price() * quantity
+            total_discount = total_price - total_discount_price
+
+            last_order_data = OrderDetailsModel.objects.all().order_by('-user_order_id').first()
+            if last_order_data is not None:
+                last_ref_no = int(last_order_data.billing_ref_no) + 1
+            else:
+                last_ref_no = 100000
+
+
+
+
+
+    return render(request,"buynow.html",{'user': user, 'product_obj': product_obj, 'discounted_price': total_discount_price,'quantity': quantity, 'total_price': total_price, 'total_discount': total_discount,'address_data':address_data, 'address_data_check':address_data_check , 'current_address': current_address})
+
+

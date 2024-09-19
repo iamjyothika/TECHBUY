@@ -15,7 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
 from userapp import views
 from adminapp import views as adminview
 # from sellerapp import views
@@ -47,6 +46,10 @@ urlpatterns = [
     path('addressremove/<int:id>',views.removeaddress),
     path('addreview',views.addreview),
     path('userupdate',views.updateuser,name="updateuser"),
+    path('buynow/<int:product_id>/', views.purchase_product, name='buynow'),
+
+
+
 
     path('adminhome',adminview.adminhome,name="adminhome"),
     path('adminshow',adminview.adminshow,name="showcategories"),

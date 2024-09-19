@@ -149,7 +149,13 @@
                 </div>
                 <!-- Place Order button within each cart item -->
                 <div>
+                  <form method="POST" action="{% url 'buynow' i.product.product_id %}">
+                    {% csrf_token %}
+                     <input type="hidden" name="quantity" value="{{ i.cart_quantity }}">
+                    <input type="hidden" name="cart_id" value="{{i.cart_id}}">
+
                   <button  type="submit" class="place-order-button position-relative end-0 me-2 choices">PLACE ORDER</button>
+                  </form>
                 </div>
               </div>
             </div>
