@@ -42,14 +42,15 @@ def categories(request, catg_id):
 
 
 def product(request, proid):
-    data = ProductModel.objects.filter(product_id=proid)
+
+
     product_obj = get_object_or_404(ProductModel, product_id=proid)
-    cat_id = ProductModel.objects.get(product_id=proid).category_id
+    cat_id =product_obj.category_id
     review = ReviewDataModel.objects.filter(product_id=proid)
     image = ProductImageModel.objects.filter(product_id=proid)
-    current_product = ProductModel.objects.get(product_id=proid)
-    similar_products = ProductModel.objects.filter(category=current_product.category).exclude(
-        product_id=current_product.product_id)[:4]
+    # current_product = ProductModel.objects.get(product_id=proid)
+    similar_products = ProductModel.objects.filter(category=product_obj.category).exclude(
+        product_id=product_obj.product_id)[:4]
     reviews = ReviewDataModel.objects.all()
     ratings = list(range(1, 6))
 

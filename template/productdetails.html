@@ -67,27 +67,27 @@
       <div class="row no-gutters">
           <div class="col-md-5 pr-2">
               <div class="card">
-                  {% for i in product_data %}
+
                   <div class="carousel-container">
                       <div id="carouselExampleIndicators" class="carousel slide">
                           <div class="carousel-inner">
-                              {% for i in product_data %}
-                              {% for image in i.images.all %}
+
+                              {% for image in product_data.images.all %}
                               <div class="carousel-item  {% if forloop.first %}active{% endif %}">
                                   <img src="{{image.product_image.url}}" class="d-block w-100" alt="...">
                               </div>
                               {% endfor %}
-                              {% endfor %}
+
                           </div>
                       </div>
                   </div>
                   <div class="thumbnail-container">
-                      {% for i in product_data %}
-                      {% for image in i.images.all %}
+
+                      {% for image in product_data.images.all %}
                       <img src="{{image.product_image.url}}" class="thumbnail" data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}">
                       {% endfor %}
-                      {% endfor %}
-                      {% endfor %}
+
+
 
                   </div>
 
@@ -146,9 +146,9 @@
               </div>
 
               <div class="about">
-                  {% for i in product_data %}
-                  <h3>{{i.product_name}}</h3>
-                  <h4 class="font-weight-bold">₹{{i.product_price}}</h4>
+
+                  <h3>{{product_data.product_name}}</h3>
+                  <h4 class="font-weight-bold">₹{{product_data.product_price}}</h4>
               </div>
 
               <div class="buttons">
@@ -172,16 +172,16 @@
 
                   <span class="font-weight-bold">Description:</span>
 
-                  <p>{{i.product_description}}</p>
+                  <p>{{product_data.product_description}}</p>
 
                   <div class="mt-2">
                     <span class="font-weight-bold">PRODUCT SPECS</span>
                   </div>
 
                   <div class="bullets">
-                    {% for i in product_data %}
+
                                 {% if cat_id == 1 %}
-                                    {% for spec in i.phones.all %}
+                                    {% for spec in product_data.phones.all %}
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Storage:{{spec.spec_ram}}RAM | {{spec.spec_storage}}ROM</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen size:{{spec.spec_display_size}} inches</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Camera:{{spec.spec_camera}}MP Front Camera</span> </div>
@@ -193,7 +193,7 @@
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
                                     {% endfor %}
                                 {% elif cat_id == 2 or cat_id == 3 %}
-                                    {% for spec in i.pc.all %}
+                                    {% for spec in product_data.pc.all %}
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Storage:{{spec.spec_ram}} RAM | {{spec.spec_storage}} ROM</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen Size:{{spec.spec_display_size}} inches</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">GPU:{{spec.spec_gpu}} GPU</span> </div>
@@ -204,7 +204,7 @@
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
                                     {% endfor %}
                                 {% elif cat_id == 4 %}
-                                    {% for spec in i.audio.all %}
+                                    {% for spec in product_data.audio.all %}
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Product type:{{spec.product_type}}</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Bluetooth:{{spec.spec_bluetooth}}</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Playback:{{spec.spec_playback}}</span> </div>
@@ -213,14 +213,14 @@
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
                                     {% endfor %}
                                 {% elif cat_id == 5 %}
-                                    {% for spec in i.tv.all %}
+                                    {% for spec in product_data.tv.all %}
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Resolution:{{spec.spec_resolution}}</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Screen size:{{spec.spec_display_size}} inches</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">OS:{{spec.spec_os}}</span> </div>
                                         <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Warranty:{{spec.warranty}} Warranty</span> </div>
                                     {% endfor %}
                                 {% endif %}
-                      {% endfor %}
+
 
                   </div>
                 </div>
@@ -229,28 +229,44 @@
                 </div>
 
                 <div class="d-flex flex-column ml-1 comment-profile">
-                  <span class="username">{{i.seller}}</span>
+                  <span class="username">{{product_data.seller}}</span>
                 </div>
 
               </div>
-              {% endfor %}
+
 
             </div>
 
           </div>
+          <style>
+/* Add this CSS to your stylesheet or inside a <style> tag */
+.card a {
+    text-decoration: none !important; /* Remove underline */
+    color: inherit; /* Inherit text color */
+}
+
+.card a:hover {
+    text-decoration: none; /* No underline on hover */
+}
+</style>
 
           <div class="card mt-2">
-            <span>Similar items:</span>
-            <div class="similar-products mt-2 d-flex flex-row justify-content-between">
-                {% for product in similar_products %}
-              <div class="card border p-1" style="width: 9rem;margin-right: 3px;"> <img src="{{product.images.first.product_image.url}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h6 class="card-title">₹{{product.product_price}}</h6>
-                </div>
-              </div>
-                {% endfor %}
+    <span>Similar items:</span>
+    <div class="similar-products mt-2 d-flex flex-row justify-content-between">
+        {% for product in similar_products %}
+        <div class="card border p-1" style="width: 9rem; margin-right: 3px;">
+            <a href="{% url 'product' product.product_id %}">
+                <img src="{{ product.images.first.product_image.url }}" class="card-img-top" alt="{{ product.product_name }}">
+                <h6 class="card-title">{{ product.product_name }} </h6>
+            </a>
+            <div class="card-body">
+                <h6 class="card-title">₹{{ product.product_price }}</h6>
             </div>
-          </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
 
           <div class="container-fluid mt-2">
@@ -284,9 +300,9 @@
                                     <i class="bi bi-star" data-rating="1"></i>
                                   </div>
                                   <input type="hidden" name="rating" id="rating" value="5">
-                                     {% for i in product_data %}
-                                    <input type="hidden" name="productid" value="{{i.product_id}}">
-                                    {% endfor %}
+
+                                    <input type="hidden" name="productid" value="{{product_data.product_id}}">
+
                                 </div>
 
                                 <div class="form-group">

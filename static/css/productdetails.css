@@ -306,3 +306,14 @@ body {
     .rating i:hover ~ i {
       color: gold;
     }
+    .card .card-title a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent */
+}
+
+.card .card-title a:hover {
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
+
+
+
